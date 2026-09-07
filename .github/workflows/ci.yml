@@ -1,0 +1,20 @@
+# .github/workflows/ci.yml
+name: ClaimsIQ CI/CD
+on: [push, pull_request]
+ 
+jobs:
+  test-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Run Day 13 evaluation suite
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: python run_evaluation.py --min-faithfulness 0.8
+      - name: Run Day 14 guardrail tests
+        run: python run_guardrail_tests.py
+      - name: Deploy to API (main branch only)
+        if: github.ref == 'refs/heads/main'
+        run: ./deploy.sh
