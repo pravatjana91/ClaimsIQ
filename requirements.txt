@@ -1,0 +1,11 @@
+snowflake-connector-python
+faker
+pandas
+pyarrow
+python-dotenv
+notebook
+langgraph
+crewai
+crewai-tools
+openai
+nest_asyncio
